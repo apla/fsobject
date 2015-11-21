@@ -1,0 +1,23 @@
+{
+  "name": "fsobject",
+  "version": "1.0.0",
+  "description": "Filesystem objects as node objects",
+  "main": "index.js",
+  "scripts": {
+    "test": "npm test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/apla/fsobject.git"
+  },
+  "keywords": [
+    "fs",
+    "object"
+  ],
+  "author": "apla",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/apla/fsobject/issues"
+  },
+  "homepage": "https://github.com/apla/fsobject#readme"
+}
