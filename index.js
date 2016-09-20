@@ -178,24 +178,31 @@ io.prototype.scanTree = function (cb) {
 	});
 };
 
-io.prototype.findUp = function (fileName, cb) {
+io.prototype.findUp = function (fileNames, cb) {
 	var self = this;
 
 	if (!cb || cb.constructor != Function)
 		return;
 
-	var fileIO = this.fileIO (fileName);
-	fileIO.stat (function (err, stats) {
-		if (!err) {
-			cb (null, self, stats);
-			return;
-		}
-		if (self.parent().path == self.path) {
-			cb (true, self);
-			return;
-		}
+	if (!Array.isArray (fileNames)) {
+		fileNames = [fileNames]
+	}
 
-		self.parent().findUp(fileName, cb);
+	fileNames.forEach (function (fileName) {
+		var fileIO = this.fileIO (fileName);
+		fileIO.stat (function (err, stats) {
+			if (!err) {
+				cb (null, self, stats);
+				return;
+			}
+			// no go if we have volume root
+			if (self.parent().path == self.path) {
+				cb (true, self);
+				return;
+			}
+
+			self.parent().findUp(fileName, cb);
+		});
 	});
 };
 
