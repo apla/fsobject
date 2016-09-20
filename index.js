@@ -203,7 +203,7 @@ io.prototype.findUp = function (fileNames, cb) {
 
 			self.parent().findUp(fileName, cb);
 		});
-	});
+	}.bind (this));
 };
 
 io.prototype.scanSubTree = function (err, stats, cb) {
