@@ -192,7 +192,7 @@ io.prototype.findUp = function (fileNames, cb) {
 		var fileIO = this.fileIO (fileName);
 		fileIO.stat (function (err, stats) {
 			if (!err) {
-				cb (null, self, stats);
+				cb (null, self, stats, fileName);
 				return;
 			}
 			// no go if we have volume root
