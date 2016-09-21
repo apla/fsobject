@@ -188,21 +188,26 @@ io.prototype.findUp = function (fileNames, cb) {
 		fileNames = [fileNames]
 	}
 
-	fileNames.forEach (function (fileName) {
-		var fileIO = this.fileIO (fileName);
-		fileIO.stat (function (err, stats) {
-			if (!err) {
-				cb (null, self, stats, fileName);
-				return;
+	FS.readdir (this.path, function (err, dirListing) {
+			
+		var foundFileName;
+		if (fileNames.some (function (fileName) {
+			if (dirListing.indexOf (fileName) >= 0) {
+				foundFileName = fileName;
+				return true;
 			}
+		})) {
+			FS.stat (Path.join (this.path, foundFileName), function (err, stats) {
+				cb (null, self, stats, foundFileName);
+			});
+		} else {
 			// no go if we have volume root
-			if (self.parent().path == self.path) {
-				cb (true, self);
-				return;
+			if (this.parent().path === this.path) {
+				return cb (true, this);
 			}
-
-			self.parent().findUp(fileName, cb);
-		});
+			// no files found with requested names, go up
+			this.parent().findUp(fileNames, cb);
+		}
 	}.bind (this));
 };
 
