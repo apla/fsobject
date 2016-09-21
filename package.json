@@ -1,6 +1,6 @@
 {
   "name": "fsobject",
-  "version": "1.0.4",
+  "version": "1.1.0",
   "description": "Filesystem objects as node objects",
   "main": "index.js",
   "scripts": {

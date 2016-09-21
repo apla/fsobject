@@ -56,6 +56,13 @@ io.safe = (function() {
 	}
 })();
 
+io.prototype.inspect = function (depth, opts) {
+	if (opts && opts.showHidden)
+		return this
+	else
+		return "{path: "+this.path+"}";
+}
+
 io.prototype.relative = function (relPath) {
 	return Path.relative (this.path, relPath instanceof io ? relPath.path : relPath);
 };
